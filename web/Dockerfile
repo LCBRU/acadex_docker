@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.8
 
 ARG version
 
@@ -8,9 +8,10 @@ WORKDIR /usr/src/app
 RUN apt-get update && \
     apt-get -y upgrade && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install \
-        default-mysql-client && \
-        libldap2-dev \
+        default-mysql-client \
         libsasl2-dev \
+        libssl-dev \
+        libldap2-dev && \
     apt-get clean
     
 RUN echo "$version"
