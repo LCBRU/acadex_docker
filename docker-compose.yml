@@ -14,3 +14,12 @@ services:
     ports:
       - "${PORT}:8000"
     command: /usr/local/bin/gunicorn --log-file=- --capture-output --config gunicorn.conf -w 2 -b :8000 app:application
+  worker:
+    env_file:
+      - .env
+    restart: always
+    build:
+      context: ./worker
+      args:
+        version: ${VERSION}
+    command: celery -A celery_worker.celery worker
